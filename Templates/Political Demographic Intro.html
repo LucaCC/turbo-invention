@@ -1,0 +1,35 @@
+{% extends "Political Demographic Layout.html" %}
+
+{% set active_page = "Political Demographic Intro"%}
+
+{% block title %}CORGIS Data set{% endblock %}
+
+{% block content %}
+<form action='/'>
+<div id=content>
+  <p>
+    <b>Description:</b> Every four years in the United States comes along a new general election where a president is elected.
+    During that process primaries and caucases are held to determine what candidate is chosen per major party.
+    This data set shows how each county in America voted for each candidate from both parties.
+    But specifically from primaries and not caucases.
+  </p>
+  <ol>
+    <li>Why do the percentages of each county not equal 100%?</li>
+    <ul>
+      <li>The percentage for each county will equal 200% because the percentages are calculated by party.</li>
+    </ul>
+    <li>How many Republican and Democratic candidates recieved votes in the primaries respectively?</li>
+    <ul>
+      <li></li>
+    </ul>
+    <li>Do independents get votes in the primaries?</li>
+    <ul>
+      <li>No, only candidates from the two main parties, Republican and Democratic, are voted for during the primary elections</li>
+    </ul>
+    <li>What is the difference between no preference and uncommited votes?</li>
+    <ul>
+      <li></li>
+    </ul>
+  </ol>
+</div>
+{% endblock %}
