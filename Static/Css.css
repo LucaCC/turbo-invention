@@ -5,5 +5,5 @@
 
 #bootstrap-overrides body {
   background-color: coral;
-  /* This is not working for some really annoying reason that bootstrap overides the body tag or something */
+  /* This is not working for some really annoying reason that bootstrap overides the body tag or something rgb(255,245,255)*/
 }
