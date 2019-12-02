@@ -1,9 +1,16 @@
 #content {
   padding: 20px;
-
 }
 
-#bootstrap-overrides body {
+h1 {
+  text-align: center;
+}
+
+p {
+  width: 33%;
+}
+
+body {
   background-color: coral;
   /* This is not working for some really annoying reason that bootstrap overides the body tag or something rgb(255,245,255)*/
 }
