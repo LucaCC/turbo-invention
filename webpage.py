@@ -8,7 +8,7 @@ app = Flask(__name__)
 def intro():
     with open('primary elections 2016.json') as election_data:
         electionData = json.load(election_data)
-    return render_template('Political Demographic Intro.html')
+    return render_template('Political_Demographic_Intro.html')
 
 if __name__=="__main__":
     app.run(debug=False)
