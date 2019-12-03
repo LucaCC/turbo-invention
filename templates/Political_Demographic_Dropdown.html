@@ -1,0 +1,17 @@
+{% extends "Political_Demographic_Layout.html" %}
+
+{% set active_page = "Political_Demographic_Dropdown"%}
+
+{% block title %}2016 Primary Election Drop Down{% endblock %}
+
+{% block content %}
+<form action="/StateCounty">
+  <select name="candidate">
+    {{candidate}}
+  </select>
+  <br><br>
+  <input type="submit">
+</form>
+<h1>{{c}}</h1>
+<p>{{c_info}}</p>
+{% endblock %}
