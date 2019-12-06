@@ -5,6 +5,83 @@
 {% block title %}2016 Primary Election Drop Down{% endblock %}
 
 {% block content %}
+<script>
+window.onload = function () {
+
+
+
+var num_Cand_Party = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	exportEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Number of Candidates per Party"
+	},
+	data: [{
+		type: "doughnut", //change type to bar, line, area, pie, etc
+		//indexLabel: "{y}", //Shows y value on all Data Points
+		indexLabelFontColor: "#5A5757",
+		indexLabelPlacement: "outside",
+		dataPoints: [
+    { y: {{demNum}}, label: "Democrats" },
+    { y: {{repNum}}, label: "Republicans" },
+    { y: {{Num}}, label: "N/A" }
+		]
+	}]
+});
+num_Cand_Party.render();
+
+var num_Vote_Party = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	exportEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Number of Votes per Party"
+	},
+	data: [{
+		type: "doughnut", //change type to bar, line, area, pie, etc
+		//indexLabel: "{y}", //Shows y value on all Data Points
+		indexLabelFontColor: "#5A5757",
+		indexLabelPlacement: "outside",
+		dataPoints: [
+    { y: {{demNumVote}}, label: "Democrats" },
+    { y: {{repNumVote}}, label: "Republicans" },
+    { y: {{NumVote}}, label: "N/A" }
+		]
+	}]
+});
+num_Vote_Party.render();
+
+$("#backButton").click(function() {
+	$(this).toggleClass("invisible");
+	chart = new CanvasJS.Chart("chartContainer", newVSReturningVisitorsOptions);
+	chart.options.data = visitorsData["New vs Returning Visitors"];
+	chart.render();
+});
+
+}
+</script>
+
+<button class="btn invisible" id="backButton">< Back</button>
+
+<style>
+  #backButton {
+	border-radius: 4px;
+	padding: 8px;
+	border: none;
+	font-size: 16px;
+	background-color: #2eacd1;
+	color: white;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+  }
+  .invisible {
+    display: none;
+  }
+</style>
+
 <form action="/StateCounty">
   <select name="candidate">
     {{candidate}}
@@ -14,4 +91,9 @@
 </form>
 <h1>{{c}}</h1>
 <p>{{c_info}}</p>
+
+
+<div id="chartContainer" style="height: 370px; width: 50%;"></div>
+<div id="chartContainer2" style="height: 370px; width: 50%;"></div>
+
 {% endblock %}
