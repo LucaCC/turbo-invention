@@ -10,31 +10,52 @@ window.onload = function () {
 
 
 
-var num_Cand_Party = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	exportEnabled: true,
-	theme: "light2", // "light1", "light2", "dark1", "dark2"
-	title:{
-		text: "Number of Candidates per Party"
-	},
-	data: [{
-		type: "doughnut", //change type to bar, line, area, pie, etc
-		//indexLabel: "{y}", //Shows y value on all Data Points
-		indexLabelFontColor: "#5A5757",
-		indexLabelPlacement: "outside",
-		dataPoints: [
-    { y: {{demNum}}, label: "Democrats" },
-    { y: {{repNum}}, label: "Republicans" },
-    { y: {{Num}}, label: "N/A" }
-		]
-	}]
-});
-num_Cand_Party.render();
+// var num_Cand_Party = new CanvasJS.Chart("chartContainer", {
+// 	animationEnabled: true,
+// 	exportEnabled: true,
+// 	theme: "light2", // "light1", "light2", "dark1", "dark2"
+// 	title:{
+// 		text: "Number of Candidates per Party"
+// 	},
+// 	data: [{
+// 		type: "doughnut", //change type to bar, line, area, pie, etc
+// 		//indexLabel: "{y}", //Shows y value on all Data Points
+// 		indexLabelFontColor: "#5A5757",
+// 		indexLabelPlacement: "outside",
+// 		dataPoints: [
+//     { y: {{demNum}}, label: "Democrats" },
+//     { y: {{repNum}}, label: "Republicans" },
+//     { y: {{Num}}, label: "N/A" }
+// 		]
+// 	}]
+// });
+// num_Cand_Party.render();
+//
+// var num_Vote_Party = new CanvasJS.Chart("chartContainer2", {
+// 	animationEnabled: true,
+// 	exportEnabled: true,
+// 	theme: "light2", // "light1", "light2", "dark1", "dark2"
+// 	title:{
+// 		text: "Number of Votes per Party"
+// 	},
+// 	data: [{
+// 		type: "doughnut", //change type to bar, line, area, pie, etc
+// 		//indexLabel: "{y}", //Shows y value on all Data Points
+// 		indexLabelFontColor: "#5A5757",
+// 		indexLabelPlacement: "outside",
+// 		dataPoints: [
+//     { y: {{demNumVote}}, label: "Democrats" },
+//     { y: {{repNumVote}}, label: "Republicans" },
+//     { y: {{NumVote}}, label: "N/A" }
+// 		]
+// 	}]
+// });
+// num_Vote_Party.render();
 
 
 var votingData = {
 "Voting Party Demographic": [{
-		click: visitorsChartDrilldownHandler,
+		click: votingChartDrilldownHandler,
 		cursor: "pointer",
 		explodeOnClick: false,
 		innerRadius: "75%",
@@ -55,47 +76,32 @@ var votingData = {
 		name: "Democrats",
 		type: "pie",
 		dataPoints: [
-			{ x: new Date("Bernie Sanders"), y: {{bernVoteD}}, color: "#37c732"},
-			{ x: new Date("Hillary Clinton"), y: {{hillVoteD}}, color: "#43bfe6"},
-			{ x: new Date("Martin O'Malley"), y: {{martVoteD}}, color: "#4141f0" }
+		{{dDataPoints}}
+			// { x: new Date("Bernie Sanders"), y: {{bernVoteD}}, color: "#37c732"},
+			// { x: new Date("Hillary Clinton"), y: {{hillVoteD}}, color: "#43bfe6"},
+			// { x: new Date("Martin O'Malley"), y: {{martVoteD}}, color: "#4141f0" }
 		]
 	}],
 	"Republicans": [{
-		name: "Returning Visitors",
+		color: "#ff0000",
+		name: "Republicans",
 		type: "pie",
 		dataPoints: [
-			{ x: new Date("Carly Fiorina"), y: {{carVoteR}} },
-			{ x: new Date("Chris Christie"), y: {{chrVoteR}} },
-			{ x: new Date("Donald Trump"), y: {{donVoteR}} },
-			{ x: new Date("Jeb Bush"), y: {{jebVoteR}} },
-			{ x: new Date("John Kasich"), y: {{johnVoteR}} },
-			{ x: new Date("Marco Rubio"), y: {marVoteR} },
-			{ x: new Date("Mike Huckabee"), y: {{mikeVoteR}} },
-			{ x: new Date("Rand Paul"), y: {{ranVoteR}} },
-			{ x: new Date("Rick Santorum"), y: {{rickVoteR}} },
-			{ x: new Date("Ted Cruz"), y: {{tedVoteR}} }
+		{{rDataPoints}}
+			// { x: new Date("Carly Fiorina"), y: {{carVoteR}} },
+			// { x: new Date("Chris Christie"), y: {{chrVoteR}} },
+			// { x: new Date("Donald Trump"), y: {{donVoteR}} },
+			// { x: new Date("Jeb Bush"), y: {{jebVoteR}} },
+			// { x: new Date("John Kasich"), y: {{johnVoteR}} },
+			// { x: new Date("Marco Rubio"), y: {{marVoteR}} },
+			// { x: new Date("Mike Huckabee"), y: {{mikeVoteR}} },
+			// { x: new Date("Rand Paul"), y: {{ranVoteR}} },
+			// { x: new Date("Rick Santorum"), y: {{rickVoteR}} },
+			// { x: new Date("Ted Cruz"), y: {{tedVoteR}} }
 		]
 	}]
 };
-var num_Vote_Party = new CanvasJS.Chart("chartContainer2", {
-	animationEnabled: true,
-	exportEnabled: true,
-	theme: "light2", // "light1", "light2", "dark1", "dark2"
-	title:{
-		text: "Number of Votes per Party"
-	},
-	data: [{
-		type: "doughnut", //change type to bar, line, area, pie, etc
-		//indexLabel: "{y}", //Shows y value on all Data Points
-		indexLabelFontColor: "#5A5757",
-		indexLabelPlacement: "outside",
-		dataPoints: [
-    { y: {{demNumVote}}, label: "Democrats" },
-    { y: {{repNumVote}}, label: "Republicans" },
-    { y: {{NumVote}}, label: "N/A" }
-		]
-	}]
-});
+
 
 var votingPartyDemographicOptions = {
 	animationEnabled: true,
@@ -114,18 +120,47 @@ var votingPartyDemographicOptions = {
 		fontFamily: "calibri",
 		fontSize: 14,
 		itemTextFormatter: function (e) {
-			return e.dataPoint.name + ": " + Math.round(e.dataPoint.y / {{allVotes}} * 100) + "%";
+			return e.dataPoint.name + ": " + Math.round(e.dataPoint.y / ({{demNumVote}} + {{repNumVote}} + {{NumVote}}) * 100) + "%";
 		}
 	},
 	data: []
 };
 
-num_Vote_Party.render();
+var votingDrilldownedChartOptions = {
+	animationEnabled: true,
+	theme: "light2",
+	axisX: {
+		labelFontColor: "#717171",
+		lineColor: "#a2a2a2",
+		tickColor: "#a2a2a2"
+	},
+	axisY: {
+		gridThickness: 0,
+		includeZero: false,
+		labelFontColor: "#717171",
+		lineColor: "#a2a2a2",
+		tickColor: "#a2a2a2",
+		lineThickness: 1
+	},
+	data: []
+};
+
+var chart = new CanvasJS.Chart("chartContainer", votingPartyDemographicOptions);
+chart.options.data = votingData["Voting Party Demographic"];
+chart.render();
+
+function votingChartDrilldownHandler(e) {
+	chart = new CanvasJS.Chart("chartContainer", votingDrilldownedChartOptions);
+	chart.options.data = votingsData[e.dataPoint.name];
+	chart.options.title = { text: e.dataPoint.name }
+	chart.render();
+	$("#backButton").toggleClass("invisible");
+}
 
 $("#backButton").click(function() {
 	$(this).toggleClass("invisible");
-	chart = new CanvasJS.Chart("chartContainer", newVSReturningVisitorsOptions);
-	chart.options.data = visitorsData["Voting Party Demographic"];
+	chart = new CanvasJS.Chart("chartContainer", votingPartyDemographicOptions);
+	chart.options.data = votingData["Voting Party Demographic"];
 	chart.render();
 });
 

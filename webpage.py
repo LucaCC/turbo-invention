@@ -16,24 +16,35 @@ def First_Page():
         if 'candidate' in request.args:
             return render_template('Political_Demographic_Dropdown.html', candidate=get_candidate_options(electionData),
             c_info=political_party(request.args['candidate'], electionData), c=request.args['candidate'],
-            repNum=get_party("Republican", electionData), demNum=get_party("Democrat", electionData), Num=get_party("N/A", electionData))
+            repNum=get_party("Republican", electionData), demNum=get_party("Democrat", electionData), Num=get_party("N/A", electionData),
+            repNumVote=get_party_vote("Republican", electionData),demNumVote=get_party_vote("Democrat", electionData),
+            NumVote=get_party_vote("N/A", electionData))
         else:
             return render_template('Political_Demographic_Dropdown.html', candidate=get_candidate_options(electionData),
             repNum=get_party("Republican", electionData), demNum=get_party("Democrat", electionData),
             Num=get_party("N/A", electionData), repNumVote=get_party_vote("Republican", electionData),
-            demNumVote=get_party_vote("Democrat", electionData), NumVote=get_party_vote("N/A", electionData))
+            demNumVote=get_party_vote("Democrat", electionData), NumVote=get_party_vote("N/A", electionData),
+            dDataPoints=get_cand_vote_data("Democrat", election_data), rDataPoints=get_cand_vote_data("Republican", election_data))
 
-def get_cand_vote_data(election_data, party):
+def get_cand_vote_data(party, election_data):
     candidate = []
+    print(election_data)
     for data in election_data:
+        print(data["Vote Data"])
         for a in data["Vote Data"].keys():
-            if a not in candidate and data["Vote Data"][a]["Party"] == party:
+            print(data["Vote Data"][a]["Party"])
+            if data["Vote Data"][a]["Party"] == party:
+                # a not in candidate and
                 candidate.append(a)
+
+    print(party)
+    print(candidate)
     options = ""
     for data in candidate:
         options = options + \
-            Markup("{ x: new Date(" + Data + "), y:" + data["Number of Votes"] + "},")
+            Markup("{ x: new Date(" + data + "), y:" + data["Number of Votes"] + "},")
     options = options[:-1]
+    print(options)
     return options
 
 def get_candidate_options(election_data):
