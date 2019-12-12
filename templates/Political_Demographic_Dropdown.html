@@ -66,13 +66,13 @@ var votingData = {
 		startAngle: 90,
 		type: "doughnut",
 		dataPoints: [
-		{ y: {{demNumVote}}, label: "Democrats", color: "#0000ff" },
-		{ y: {{repNumVote}}, label: "Republicans", color: "#ff0000" },
-		{ y: {{NumVote}}, label: "N/A", color: "#b4b4b4" }
+		{ y: {{demNumVote}}, name: "Democrats", color: "#0000ff" },
+		{ y: {{repNumVote}}, name: "Republicans", color: "#ff0000" },
+		{ y: {{NumVote}}, name: "N/A", color: "#b4b4b4" }
 		]
 	}],
 	"Democrats": [{
-		color: "#0000ff",
+		// color: "#0000ff",
 		name: "Democrats",
 		type: "pie",
 		dataPoints: [
@@ -83,7 +83,7 @@ var votingData = {
 		]
 	}],
 	"Republicans": [{
-		color: "#ff0000",
+		// color: "#ff0000",
 		name: "Republicans",
 		type: "pie",
 		dataPoints: [
@@ -127,21 +127,9 @@ var votingPartyDemographicOptions = {
 };
 
 var votingDrilldownedChartOptions = {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: true,
 	animationEnabled: true,
-	theme: "light2",
-	axisX: {
-		labelFontColor: "#717171",
-		lineColor: "#a2a2a2",
-		tickColor: "#a2a2a2"
-	},
-	axisY: {
-		gridThickness: 0,
-		includeZero: false,
-		labelFontColor: "#717171",
-		lineColor: "#a2a2a2",
-		tickColor: "#a2a2a2",
-		lineThickness: 1
-	},
 	data: []
 };
 
@@ -151,7 +139,7 @@ chart.render();
 
 function votingChartDrilldownHandler(e) {
 	chart = new CanvasJS.Chart("chartContainer", votingDrilldownedChartOptions);
-	chart.options.data = votingsData[e.dataPoint.name];
+	chart.options.data = votingData[e.dataPoint.name];
 	chart.options.title = { text: e.dataPoint.name }
 	chart.render();
 	$("#backButton").toggleClass("invisible");
