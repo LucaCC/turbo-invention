@@ -10,47 +10,7 @@ window.onload = function () {
 
 
 
-// var num_Cand_Party = new CanvasJS.Chart("chartContainer", {
-// 	animationEnabled: true,
-// 	exportEnabled: true,
-// 	theme: "light2", // "light1", "light2", "dark1", "dark2"
-// 	title:{
-// 		text: "Number of Candidates per Party"
-// 	},
-// 	data: [{
-// 		type: "doughnut", //change type to bar, line, area, pie, etc
-// 		//indexLabel: "{y}", //Shows y value on all Data Points
-// 		indexLabelFontColor: "#5A5757",
-// 		indexLabelPlacement: "outside",
-// 		dataPoints: [
-//     { y: {{demNum}}, label: "Democrats" },
-//     { y: {{repNum}}, label: "Republicans" },
-//     { y: {{Num}}, label: "N/A" }
-// 		]
-// 	}]
-// });
-// num_Cand_Party.render();
-//
-// var num_Vote_Party = new CanvasJS.Chart("chartContainer2", {
-// 	animationEnabled: true,
-// 	exportEnabled: true,
-// 	theme: "light2", // "light1", "light2", "dark1", "dark2"
-// 	title:{
-// 		text: "Number of Votes per Party"
-// 	},
-// 	data: [{
-// 		type: "doughnut", //change type to bar, line, area, pie, etc
-// 		//indexLabel: "{y}", //Shows y value on all Data Points
-// 		indexLabelFontColor: "#5A5757",
-// 		indexLabelPlacement: "outside",
-// 		dataPoints: [
-//     { y: {{demNumVote}}, label: "Democrats" },
-//     { y: {{repNumVote}}, label: "Republicans" },
-//     { y: {{NumVote}}, label: "N/A" }
-// 		]
-// 	}]
-// });
-// num_Vote_Party.render();
+
 
 
 var votingData = {
@@ -75,29 +35,22 @@ var votingData = {
 		// color: "#0000ff",
 		name: "Democrats",
 		type: "pie",
+		showInLegend: "true",
+		legendText: "{label}",
+		legendMarkerType: "square",
 		dataPoints: [
 		{{dDataPoints}}
-			// { x: new Date("Bernie Sanders"), y: {{bernVoteD}}, color: "#37c732"},
-			// { x: new Date("Hillary Clinton"), y: {{hillVoteD}}, color: "#43bfe6"},
-			// { x: new Date("Martin O'Malley"), y: {{martVoteD}}, color: "#4141f0" }
 		]
 	}],
 	"Republicans": [{
 		// color: "#ff0000",
 		name: "Republicans",
 		type: "pie",
+		showInLegend: "true",
+		legendText: "{label}",
+		legendMarkerType: "square",
 		dataPoints: [
 		{{rDataPoints}}
-			// { x: new Date("Carly Fiorina"), y: {{carVoteR}} },
-			// { x: new Date("Chris Christie"), y: {{chrVoteR}} },
-			// { x: new Date("Donald Trump"), y: {{donVoteR}} },
-			// { x: new Date("Jeb Bush"), y: {{jebVoteR}} },
-			// { x: new Date("John Kasich"), y: {{johnVoteR}} },
-			// { x: new Date("Marco Rubio"), y: {{marVoteR}} },
-			// { x: new Date("Mike Huckabee"), y: {{mikeVoteR}} },
-			// { x: new Date("Rand Paul"), y: {{ranVoteR}} },
-			// { x: new Date("Rick Santorum"), y: {{rickVoteR}} },
-			// { x: new Date("Ted Cruz"), y: {{tedVoteR}} }
 		]
 	}]
 };
@@ -166,15 +119,16 @@ $("#backButton").click(function() {
 	background-color: #2eacd1;
 	color: white;
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 20%;
+	left: 50%;
 	cursor: pointer;
   }
   .invisible {
     display: none;
   }
 </style>
-
+<html>
+<body>
 <form action="/StateCounty">
   <select name="candidate">
     {{candidate}}
@@ -184,6 +138,8 @@ $("#backButton").click(function() {
 </form>
 <h1>{{c}}</h1>
 <p>{{c_info}}</p>
+</body>
+</html>
 
 
 <div id="chartContainer" style="height: 370px; width: 50%;"></div>
