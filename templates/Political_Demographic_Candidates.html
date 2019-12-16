@@ -1,0 +1,26 @@
+{% extends "Political_Demographic_Layout.html" %}
+
+{% set active_page = "Political_Demographic_Candidates"%}
+
+{% block title %}2016 Primary Election Candidates{% endblock %}
+
+{% block content %}
+
+<script>
+window.onload = function () {
+
+}
+</script>
+
+<form action="/Candidates">
+  <select name="party">
+    {{party}}
+  </select>
+  <br><br>
+  <input type="submit">
+</form>
+<h1>{{p}}</h1>
+
+
+
+{% endblock %}

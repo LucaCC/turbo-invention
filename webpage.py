@@ -33,22 +33,58 @@ def First_Page():
             rDataPoints=get_cand_vote_data("Republican", electionData, repColors))
 
 
+@app.route("/Candidate")
+def candidate():
+    with open('Primary_Elections_2016.json') as election_data:
+        electionData = json.load(election_data)
+        if 'state' in request.args:
+            return render_template('Political_Demographic_Candidates.html', party=get_party(electionData), p=request.args['party'])
+        else:
+            return render_template('Political_Demographic_Candidates.html', party=get_party(electionData))
+
+
 @app.route("/State")
 def state():
     with open('Primary_Elections_2016.json') as election_data:
         electionData = json.load(election_data)
         if 'state' in request.args:
-            return render_template('Political_Demographic_States.html', state=get_states(electionData), s=request.args['state'])
+            return render_template('Political_Demographic_States.html', state=get_states(electionData), s=request.args['state'], counties=get_counties(electionData, request.args['state']))
+        elif 'counties' in request.args:
+            return render_template('Political_Demographic_States.html', state=get_states(electionData), c=request.args['counties'], counties=get_counties(electionData, request.args))
         else:
             return render_template('Political_Demographic_States.html', state=get_states(electionData))
 
-def get_states(election_data):
-    state = []
+def get_party(election_data):
+    party = []
     for data in election_data:
-        if data["Location"]["State"] not in state:
-            state.append(data["Location"]["State"])
+        for a in data["Vote Data"].keys():
+            if data["Vote Data"][a]["Party"] not in party:
+                party.append(data["Vote Data"][a]["Party"])
     options = ""
-    for data in state:
+    for data in party:
+        options = options + \
+            Markup("<option value=\"" + data + "\">" + data + "</option>")
+    return options
+def get_counties(election_data, state):
+    counties = []
+
+def get_states(election_data):
+    states = []
+    for data in election_data:
+        if data["Location"]["State"] not in states:
+            states.append(data["Location"]["State"])
+    options = ""
+    for data in states:
+        options = options + \
+            Markup("<option value=\"" + data + "\">" + data + "</option>")
+    return options
+def get_counties(election_data, state):
+    counties = []
+    for data in election_data:
+        if data["Location"]["State"] == state and data["Location"]["County"] not in counties:
+            counties.append(data["Location"]["County"])
+    options = ""
+    for data in counties:
         options = options + \
             Markup("<option value=\"" + data + "\">" + data + "</option>")
     return options

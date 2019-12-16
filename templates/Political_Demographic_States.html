@@ -2,45 +2,34 @@
 
 {% set active_page = "Political_Demographic_States"%}
 
-{% block title %}2016 Primary Election Drop Down{% endblock %}
+{% block title %}2016 Primary Election States & Counties{% endblock %}
 
 {% block content %}
 
 <script>
 window.onload = function () {
 
-  var num_Cand_Party = new CanvasJS.Chart("chartContainer", {
-  	animationEnabled: true,
-  	exportEnabled: true,
-  	theme: "light2", // "light1", "light2", "dark1", "dark2"
-  	title:{
-  		text: "Number of Candidates per Party"
-  	},
-  	data: [{
-  		type: "doughnut", //change type to bar, line, area, pie, etc
-  		//indexLabel: "{y}", //Shows y value on all Data Points
-  		indexLabelFontColor: "#5A5757",
-  		indexLabelPlacement: "outside",
-  		dataPoints: [
-      { y: {{demNum}}, label: "Democrats" },
-      { y: {{repNum}}, label: "Republicans" },
-      { y: {{Num}}, label: "N/A" }
-  		]
-  	}]
-  });
-  num_Cand_Party.render();
 }
 </script>
-<html>
-<body>
+
 <form action="/State">
-  <select name="State">
+  <select name="state">
     {{state}}
   </select>
   <br><br>
   <input type="submit">
 </form>
 <h1>{{s}}</h1>
-<!-- <p>{{c_info}}</p> -->
-</body>
-</html>
+<form action="/State/?state={{s}}">
+  <select name="counties">
+    {{counties}}
+  </select>
+  <br><br>
+  <input type="submit">
+</form>
+<h1>{{c}}</h1>
+<p>{{c_fun_fact}}</p>
+
+
+
+{% endblock %}
