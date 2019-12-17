@@ -20,16 +20,23 @@ window.onload = function () {
   <input type="submit">
 </form>
 <h1>{{s}}</h1>
-<form action="/State/?state={{s}}">
+<form action="/State">
   <select name="counties">
     {{counties}}
   </select>
   <br><br>
-  <input type="submit">
+  <input id="b" type="submit" name="state" value="{{s}}">
 </form>
 <h1>{{c}}</h1>
 <p>{{c_fun_fact}}</p>
 
-
+<style>
+  h1{
+    color: red;
+  }
+  #b{
+    content: "Submit";
+  }
+</style>
 
 {% endblock %}

@@ -33,7 +33,7 @@ def First_Page():
             rDataPoints=get_cand_vote_data("Republican", electionData, repColors))
 
 
-@app.route("/Candidate")
+@app.route("/Candidates")
 def candidate():
     with open('Primary_Elections_2016.json') as election_data:
         electionData = json.load(election_data)
@@ -50,7 +50,7 @@ def state():
         if 'state' in request.args:
             return render_template('Political_Demographic_States.html', state=get_states(electionData), s=request.args['state'], counties=get_counties(electionData, request.args['state']))
         elif 'counties' in request.args:
-            return render_template('Political_Demographic_States.html', state=get_states(electionData), c=request.args['counties'], counties=get_counties(electionData, request.args))
+            return render_template('Political_Demographic_States.html', state=get_states(electionData), c=request.args['counties'], counties=get_counties(electionData, request.args['state']), s=request.args['state'])
         else:
             return render_template('Political_Demographic_States.html', state=get_states(electionData))
 
