@@ -1,6 +1,7 @@
 from flask import Flask, request, Markup, render_template, flash, Markup
 import os
 import json
+import random
 
 app = Flask(__name__)
 
@@ -48,11 +49,49 @@ def state():
     with open('Primary_Elections_2016.json') as election_data:
         electionData = json.load(election_data)
         if 'state' in request.args:
-            return render_template('Political_Demographic_States.html', state=get_states(electionData), s=request.args['state'], counties=get_counties(electionData, request.args['state']))
+            print(get_vote("Republican", "Mississippi", election_data))
+            return render_template('Political_Demographic_States.html', state=get_states(electionData), s=request.args['state'],
+            counties=get_counties(electionData, request.args['state']), dVote=Markup('{ label: "' + str(2) + '", y:' + str(3) + '}'),
+            rVote=get_vote("Republican", request.args['state'], election_data))
         elif 'counties' in request.args:
-            return render_template('Political_Demographic_States.html', state=get_states(electionData), c=request.args['counties'], counties=get_counties(electionData, request.args['state']), s=request.args['state'])
+            return render_template('Political_Demographic_States.html', state=get_states(electionData), c=request.args['counties'],
+            counties=get_counties(electionData, request.args['state']), s=request.args['state'])
         else:
             return render_template('Political_Demographic_States.html', state=get_states(electionData))
+
+def get_vote(party, state, election_data):
+    candidate = {}
+    for data in election_data:
+        for a in data["Vote Data"].keys():
+            # print(state, data["Location"]["State"])
+            if data["Location"]["State"] == state and data["Vote Data"][a]["Party"] == party:
+                if a not in candidate:
+                    candidate[a] = data["Vote Data"][a]["Number of Votes"]
+                else:
+                    candidate[a] += data["Vote Data"][a]["Number of Votes"]
+    options = ""
+    for data in candidate:
+        print(data, candidate[data])
+        options = options + \
+            Markup('{y:' + str(candidate[data]) + ', label: "' + data + '"},')
+            # Markup('{y:' + str(candidate[data]) + ', label: "' + data + '",  color: "' + color_party(party) + '"},')
+    options = options[:-1]
+    return options
+
+def color_party(party):
+    r = 0
+    b = 0
+    c = 0
+    if party == "Democratic":
+        r = random.randint(0,50)
+        g = random.randint(0,150)
+        b = random. randint(200, 255)
+    else:
+        b = random.randint(0,50)
+        g = random.randint(0,150)
+        r = random. randint(200, 255)
+    return "rgb(" +str(r) + ", " + str(g) + ", " + str(b) + ")"
+
 
 def get_party(election_data):
     party = []
