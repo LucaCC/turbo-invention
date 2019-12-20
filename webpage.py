@@ -190,4 +190,4 @@ def get_party_vote(party_type, election_data):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
